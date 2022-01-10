@@ -1,6 +1,6 @@
 # Create an Http Server for Node
 const http = require("http");
-// get a port 
+1. get a port 
 const port = process.env.PORT || 4000;
 
 const server = http.createServer((request, respond) => {
@@ -17,7 +17,7 @@ const server = http.createServer((request, respond) => {
 
 });
 
-// running the server 
+2. running the server 
 server.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
@@ -29,13 +29,13 @@ const express = require("express");
 const application = express();
 const port = 4000;
 
-// create url paths (end point)
+1. create url paths (end point)
 application.get("/",(req,res)=>{
     res.send("hello World");
 });
 
 
-// run the Server 
+2. run the Server 
 application.listen(port,()=>{
     console.log(`Server running at http://localhost:${port}`);
 });
