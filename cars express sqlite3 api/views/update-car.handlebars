@@ -1,0 +1,24 @@
+<title>Edit Car</title>
+<div class="container">
+    <h1> update car </h1>
+    {{#each car_data}}
+    <form action="/update/{{this.id}}" method="post" class="form">
+
+        <div class="my-2">
+            <input class="form-control" type="text" name="make" placeholder="Enter car name" value="{{this.make}}">
+        </div>
+
+        <div class="my-2">
+            <input class="form-control" type="text" name="model" placeholder="Enter car model" value="{{this.model}}">
+        </div>
+
+        <div class="my-2">
+            <input class="form-control" type="number" name="year" placeholder="Enter car year" value="{{this.year}}">
+        </div>
+
+        <div class="my-2">
+            <button type="submit" class="btn btn-success">Update car</button>
+        </div>
+        {{/each}}
+    </form>
+</div>

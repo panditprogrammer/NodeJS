@@ -1,0 +1,38 @@
+<title>Search Cars</title>
+<div class="container">
+    <h3 class="py-4"> Search Result for : {{#each keyword}} <span class="bg-info px-2">{{this}} {{/each}}
+            ({{Cars.length}} Records Found)</span></h3>
+    <table class="table">
+        <thead>
+            <tr class="bg-dark text-white ">
+                <th>Car</th>
+                <th>Model</th>
+                <th>year</th>
+                <th colspan="2" class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {{#if Cars.length}}
+            {{#each Cars}}
+            <tr>
+                <td>{{this.make}}</td>
+                <td>{{this.model}}</td>
+                <td>{{this.year}}</td>
+                <td class="text-center"><a class="badge bg-info" href="/update/{{this.id}}">Edit</a></td>
+                <td class="text-center"><a class="badge bg-danger" href="/delete/{{this.id}}">Delete</a></td>
+            </tr>
+            {{/each}}
+        </tbody>
+        {{/if}}
+
+
+        {{!-- <div class="alert alert-info alert-dismissible fade show text-center" role="alert">
+            <strong>Records not Found!</strong> Try another keyword
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div> --}}
+
+        </tbody>
+
+    </table>
+</div>

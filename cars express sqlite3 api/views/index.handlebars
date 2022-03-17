@@ -1,0 +1,26 @@
+<div class="container">
+    <h3 class="py-4"> Dashboard : All Cars (Total : {{Cars.length}})</h3>
+    <table class="table">
+        <thead>
+            <tr class="bg-dark text-white ">
+                <th>Car</th>
+                <th>Model</th>
+                <th>year</th>
+                <th colspan="2" class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each Cars}}
+            <tr>
+                <td>{{this.make}}</td>
+                <td>{{this.model}}</td>
+                <td>{{this.year}}</td>
+                <td class="text-center"><a class="badge bg-info" href="/update/{{this.id}}">Edit</a></td>
+                <td class="text-center"><a class="badge bg-danger" href="/delete/{{this.id}}">Delete</a></td>
+            </tr>
+            {{/each}}
+
+        </tbody>
+
+    </table>
+</div>
