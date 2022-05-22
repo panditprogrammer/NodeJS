@@ -71,6 +71,29 @@ app.get("/registration/:id", async (req, res) => {
 })
 
 
+//update data in database for one student by Id
+app.patch("/registration/:id", async (req, res) => {
+    try {
+        const _id = req.params.id  // get the id from url 
+        // const result = await Student.findByIdAndUpdate(_id,req.body);
+
+        // show the updated data when gets update
+        const result = await Student.findByIdAndUpdate(_id, req.body, { new: true });
+
+        if (!result)
+            res.status(404).send();
+        else
+            res.status(200).send(result);
+
+    } catch (error) {
+        res.status(404).send(error);
+    }
+})
+
+
+
+
+
 app.listen(port, () => {
     console.log(`Server running on at http://localhost:${port}`);
 })
