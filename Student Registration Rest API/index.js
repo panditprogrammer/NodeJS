@@ -1,17 +1,90 @@
 const express = require("express");
-const { json } = require("express/lib/response");
-const Student = require("./src/students");
+const registrationRouter = require("./src/routers/students")
 require("dotenv").config();
 require("./src/database");
+
 app = express();
+// create express Router 
+const router = new express.Router();
+
 const port = process.env.PORT || 8000
 
-// using json data 
+// for using json data 
 app.use(express.json());
+// for our seperate student router 
+app.use(registrationRouter);
 
 // root path 
 app.get("/", (req, res) => {
-    res.send("Student Registration REST API NodeJS");
+    res.send(`
+    <div style="width:1000px; margin: auto;">
+    <h1 style="color: crimson;"> Student Registration REST API NodeJS Express MongoDB</h1>
+    <h3>Try these paths</h3>
+    
+    <details>
+      <summary><strong>/registration</strong> - (GET)</summary>
+      <p>Get all registered students </p>
+     <br> <p>Resonsive -  </p>
+
+      <pre>
+      {
+          "name": "s_name",
+          "email":"s_email",
+          "phone":"s_phone",
+          "address":"s_address"
+      }
+  </pre>
+    </details>
+    
+    <details>
+      <summary><strong>/registration</strong> - (POST)</summary>
+      <p>Register new student  </p>
+     <br> <p>Request -  </p>
+
+      <pre>
+          {
+              "name": "s_name",
+              "email":"s_email",
+              "phone":"s_phone",
+              "address":"s_address"
+          }
+      </pre>
+    </details>
+
+    <details>
+      <summary><strong>/registration/id</strong> - (PUT)</summary>
+      <p>Update student by id  </p>
+     <br> <p>Resonsive -  </p>
+
+      <pre>
+            {
+                "_id": "6289b810de2fac34b664c4bf",
+                "name": "John Doe",
+                "email": "johndoe@gmail.com",
+                "phone": 8340460297,
+                "address": "st 72 usa",
+                "__v": 0
+            }
+      </pre>
+    </details>
+
+    <details>
+      <summary><strong>/registration/id</strong> - (DELETE)</summary>
+      <p>Delete student by id  </p>
+     <br> <p>Resonsive -  </p>
+      
+      <pre>
+            {   "_id": "6289b810de2fac34b664c4bf",
+                "name": "John Doe",
+                "email": "johndoe@gmail.com",
+                "phone": 8340460297,
+                "address": "st 72 usa",
+                "__v": 0
+            }
+      </pre>
+    </details>
+    </div>
+    `);
 })
 
 // create a student using promises
@@ -28,83 +101,7 @@ app.get("/", (req, res) => {
 
 // })
 
-
-// create a student using async await
-app.post("/registration", async (req, res) => {
-    try {
-        // get the student data 
-        const studentData = new Student(req.body);
-        // save data to db 
-        const result = await studentData.save();
-        res.status(201).send(result);
-    } catch (e) {
-        res.status(400).send(e);
-    }
-})
-
-
-
-// read the data from database
-app.get("/registration", async (req, res) => {
-    try {
-        // get all data from collection 
-        const allStudents = await Student.find();
-        res.status(200).send(allStudents);
-    } catch (error) {
-        res.status(200).send(error);
-    }
-})
-
-// read the data from database for one student by Id
-app.get("/registration/:id", async (req, res) => {
-    try {
-        const id = req.params.id  // get the id from url 
-        const result = await Student.findById({ _id: id });
-        if (!result)
-            res.status(404).send();
-        else
-            res.status(200).send(result);
-
-    } catch (error) {
-        res.status(404).send(error);
-    }
-})
-
-
-//update data in database for one student by Id
-app.patch("/registration/:id", async (req, res) => {
-    try {
-        const _id = req.params.id  // get the id from url 
-        // const result = await Student.findByIdAndUpdate(_id,req.body);
-
-        // show the updated data when gets update
-        const result = await Student.findByIdAndUpdate(_id, req.body, { new: true });
-
-        if (!result)
-            res.status(404).send();
-        else
-            res.status(200).send(result);
-
-    } catch (error) {
-        res.status(404).send(error);
-    }
-})
-
-
-
-// delete data from database using delete method 
-app.delete("/registration/:id", async (req,res) => {
-    try {
-        if (!req.params.id) {
-            return res.status(400).send();
-        }
-        const deletedResult = await Student.findByIdAndDelete(req.params.id);
-        res.send(deletedResult);
-    } catch (error) {
-        res.status(500).send(error);
-    }
-})
-
 app.listen(port, () => {
     console.log(`Server running on at http://localhost:${port}`);
 })
+
