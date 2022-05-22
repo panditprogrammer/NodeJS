@@ -92,7 +92,18 @@ app.patch("/registration/:id", async (req, res) => {
 
 
 
-
+// delete data from database using delete method 
+app.delete("/registration/:id", async (req,res) => {
+    try {
+        if (!req.params.id) {
+            return res.status(400).send();
+        }
+        const deletedResult = await Student.findByIdAndDelete(req.params.id);
+        res.send(deletedResult);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
 
 app.listen(port, () => {
     console.log(`Server running on at http://localhost:${port}`);
